@@ -1,10 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:io';
+
 import 'package:chattapp/pages/complete.dart';
 import 'package:chattapp/pages/dash.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Auth {
   final _auth = FirebaseAuth.instance;
@@ -70,11 +76,70 @@ class Auth {
     }
   }
 
-  login(String email, String password) async {
+  login(String email, String password, context) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth
+          .signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      )
+          .then((value) {
+        Fluttertoast.showToast(msg: "Loged in!");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: ((context) {
+              return DashBoard();
+            }),
+          ),
+        );
+      });
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
     }
+  }
+
+  getInfo() async {
+    var email = _auth.currentUser!.email;
+    var datas;
+    try {
+      final responce = await _firestore.collection("users").get();
+      final data =
+          responce.docs.where((element) => element['email'] == email).first;
+      datas = data;
+    } catch (e) {
+      print(e.toString());
+    }
+    return datas;
+  }
+
+  static Future selectImage(context) async {
+    final storage = FirebaseStorage.instance;
+    var url;
+
+    final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    // final File file = File(image.path);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("File Upleading"),
+            content: Center(
+              child: CircularProgressIndicator(
+                color: Colors.indigo,
+              ),
+            ),
+          );
+        });
+
+    try {
+      final uploaded = await storage.ref(image!.name).putFile(File(image.path));
+      var u = await uploaded.ref.getDownloadURL();
+      url = u;
+    } catch (e) {
+      print(e.toString());
+    }
+    Navigator.pop(context);
+    return url;
   }
 }

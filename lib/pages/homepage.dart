@@ -1,10 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:chattapp/pages/Auth/auth.dart';
 import 'package:chattapp/pages/singup.dart';
 import "package:flutter/material.dart";
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+  final email = TextEditingController();
+  final password = TextEditingController();
+  bool spin = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +44,7 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: email,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'email',
@@ -65,6 +70,7 @@ class HomePage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: password,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Password',
@@ -99,28 +105,40 @@ class HomePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                // padding: EdgeInsets.symmetric(horizontal: 25),
-                height: 56,
-                width: 284,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+              onTap: () async {
+                try {
+                  await Auth()
+                      .login(email.text.trim(), password.text.trim(), context);
+                } catch (e) {
+                  print(e.toString());
+                }
+              },
+              child: Stack(children: [
+                Container(
+                  // padding: EdgeInsets.symmetric(horizontal: 25),
+                  height: 56,
+                  width: 284,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+                // Center(
+                //   child: CircularProgressIndicator(color: Colors.grey[900]),
+                // )
+              ]),
             ),
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
