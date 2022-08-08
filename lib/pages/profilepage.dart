@@ -9,23 +9,62 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: GestureDetector(
-              onTap: () {},
-              child: CircleAvatar(
-                // radius: 23,
-                backgroundColor: Colors.white54,
+        backgroundColor: Colors.blue[900],
+        title: Text('Profile'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(29),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.blue[900],
+              radius: 63,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: double.infinity,
+              height: 55,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  "data",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                  ),
+                ),
               ),
             ),
-          ),
-        ],
-        backgroundColor: Colors.blue[900],
-        title: Text('Chatts'),
-      ),
-      body: Center(
-        child: Text("Profile Page"),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: double.infinity,
+              height: 55,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Text(
+                  "data",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

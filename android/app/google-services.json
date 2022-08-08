@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "135008551863",
+    "project_id": "chatapflt",
+    "storage_bucket": "chatapflt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135008551863:android:3b44d74684cb3904851e32",
+        "android_client_info": {
+          "package_name": "com.example.chattapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135008551863-udajonr0jhp3ukeoetsr6hsek41nhma7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsQrm8_Iq4FL_jAEGFsq4qDWslJw9OYtk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135008551863-udajonr0jhp3ukeoetsr6hsek41nhma7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
