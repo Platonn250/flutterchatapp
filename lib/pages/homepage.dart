@@ -99,16 +99,7 @@ class HomePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return SignUp();
-                    },
-                  ),
-                );
-              },
+              onTap: () {},
               child: Container(
                 // padding: EdgeInsets.symmetric(horizontal: 25),
                 height: 56,
@@ -135,7 +126,16 @@ class HomePage extends StatelessWidget {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text("New User"),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return SignUp();
+                    },
+                  ),
+                );
+              },
               child: Text(
                 "Sign Up!?",
                 style:

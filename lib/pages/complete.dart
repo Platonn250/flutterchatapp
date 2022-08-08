@@ -1,10 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:chattapp/pages/Auth/auth.dart';
 import 'package:chattapp/pages/dash.dart';
 import 'package:flutter/material.dart';
 
 class CompleteProfile extends StatelessWidget {
-  const CompleteProfile({Key? key}) : super(key: key);
+  final user;
+  CompleteProfile({Key? key, this.user}) : super(key: key);
+  final name = TextEditingController();
+  final number = TextEditingController();
+  final image = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,7 @@ class CompleteProfile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: name,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Name',
@@ -65,6 +71,7 @@ class CompleteProfile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: number,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Contact',
@@ -90,6 +97,7 @@ class CompleteProfile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: image,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Select Photo',
@@ -127,14 +135,13 @@ class CompleteProfile extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return DashBoard();
-                    },
-                  ),
+              onTap: () async {
+                await Auth().complete(
+                  user: user,
+                  name: name.text.trim(),
+                  number: number.text.trim(),
+                  image: image.text.trim(),
+                  context: context,
                 );
               },
               child: Container(
@@ -147,12 +154,15 @@ class CompleteProfile extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Center(
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                  child: GestureDetector(
+                    onTap: () async {},
+                    child: Center(
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

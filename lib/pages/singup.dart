@@ -1,10 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:chattapp/pages/Auth/auth.dart';
 import 'package:chattapp/pages/complete.dart';
+import 'package:chattapp/pages/homepage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUp extends StatelessWidget {
-  const SignUp({Key? key}) : super(key: key);
+  SignUp({
+    Key? key,
+  }) : super(key: key);
+
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final comfirmPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +49,7 @@ class SignUp extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: email,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'email',
@@ -65,6 +75,7 @@ class SignUp extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: password,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Password',
@@ -90,6 +101,7 @@ class SignUp extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: comfirmPassword,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Confirm password',
@@ -127,15 +139,20 @@ class SignUp extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return CompleteProfile();
-                    },
-                  ),
-                );
+              onTap: () async {
+                if (email.text.trim().isNotEmpty && password.text.isNotEmpty) {
+                  await Auth().signUp(
+                    email.text.trim(),
+                    password.text.trim(),
+                    comfirmPassword.text.trim(),
+                    context,
+                  );
+                } else {
+                  Fluttertoast.showToast(msg: "Fill the fields");
+                }
+                email.clear();
+                password.clear();
+                comfirmPassword.clear();
               },
               child: Container(
                 // padding: EdgeInsets.symmetric(horizontal: 25),
@@ -163,7 +180,16 @@ class SignUp extends StatelessWidget {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text("Already Have an Account?"),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return HomePage();
+                    },
+                  ),
+                );
+              },
               child: Text(
                 "Login",
                 style:
