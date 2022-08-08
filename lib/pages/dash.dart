@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:chattapp/pages/chatpage.dart';
+import 'package:chattapp/pages/profilepage.dart';
 import 'package:flutter/material.dart';
 
 class DashBoard extends StatelessWidget {
@@ -13,9 +15,21 @@ class DashBoard extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: CircleAvatar(
-              // radius: 23,
-              backgroundColor: Colors.white54,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return ProfilePage();
+                    },
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                // radius: 23,
+                backgroundColor: Colors.white54,
+              ),
             ),
           ),
         ],
@@ -67,10 +81,11 @@ class DashBoard extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-                itemCount: 60,
-                itemBuilder: (context, index) {
-                  return GroupCard();
-                }),
+              itemCount: 2,
+              itemBuilder: (context, index) {
+                return GroupCard();
+              },
+            ),
           )
         ],
       ),
@@ -85,60 +100,72 @@ class GroupCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 16, left: 10, right: 10),
-      child: Container(
-        width: double.infinity,
-        height: 60,
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 10,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ChatPage();
+              },
             ),
-            CircleAvatar(
-              radius: 23,
-              backgroundColor: Colors.blue[900],
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Flutter Group",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+          );
+        },
+        child: Container(
+          width: double.infinity,
+          height: 60,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 10,
+              ),
+              CircleAvatar(
+                radius: 23,
+                backgroundColor: Colors.blue[900],
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Flutter Group",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                Text(
-                  "Flutter Group",
+                  Text(
+                    "Flutter Group",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Text(
+                  "Xd",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-              ],
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Text(
-                "Xd",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
