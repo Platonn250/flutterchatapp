@@ -99,7 +99,7 @@ class CompleteProfile extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
                   onTap: () async {
-                    image = await Auth.selectImage(context);
+                    image = await Auth().selectImage(context);
                   },
                   // controller: image,
                   decoration: InputDecoration(

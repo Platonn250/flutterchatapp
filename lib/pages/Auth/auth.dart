@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_typing_uninitialized_variables, avoid_print
 
 import 'dart:io';
 
@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 class Auth {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+  final _firebaseStorage = FirebaseStorage.instance;
   Future signUp(
       String email, String password, String comfirmPasswod, context) async {
     var user;
@@ -113,33 +114,39 @@ class Auth {
     return datas;
   }
 
-  static Future selectImage(context) async {
+  Future uploadVideoFile(String file) async {
+    Reference ref = _firebaseStorage.ref().child('${DateTime.now()}.mp4');
+    UploadTask uploadTask = ref.putFile(File(file));
+
+    TaskSnapshot taskSnapshot = await uploadTask
+        // ignore: avoid_print
+        .whenComplete(() => print('done'))
+        // ignore: invalid_return_type_for_catch_error, avoid_print
+        .catchError((error) => print('something went wrong'));
+    String url = await taskSnapshot.ref.getDownloadURL();
+    return url;
+  }
+
+  Future selectImage(context) async {
     final storage = FirebaseStorage.instance;
     var url;
 
     final image = await ImagePicker().pickImage(source: ImageSource.camera);
+    Fluttertoast.showToast(msg: "image picked");
     // final File file = File(image.path);
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("File Upleading"),
-            content: Center(
-              child: CircularProgressIndicator(
-                color: Colors.indigo,
-              ),
-            ),
-          );
-        });
+    // showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return AlertDialog(
+    //         title: Text("File Upleading"),
+    //         content: Center(
+    //           child: CircularProgressIndicator(
+    //             color: Colors.indigo,
+    //           ),
+    //         ),
+    //       );
+    //     });
 
-    try {
-      final uploaded = await storage.ref(image!.name).putFile(File(image.path));
-      var u = await uploaded.ref.getDownloadURL();
-      url = u;
-    } catch (e) {
-      print(e.toString());
-    }
-    Navigator.pop(context);
-    return url;
+    url = uploadVideoFile(image!.path);
   }
 }

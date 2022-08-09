@@ -79,14 +79,6 @@ class DashBoard extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 2,
-              itemBuilder: (context, index) {
-                return GroupCard();
-              },
-            ),
-          )
         ],
       ),
     );

@@ -11,9 +11,9 @@ class SignUp extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final email = TextEditingController();
-  final password = TextEditingController();
-  final comfirmPassword = TextEditingController();
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  final _comfirmPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class SignUp extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  controller: email,
+                  controller: _email,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'email',
@@ -75,7 +75,7 @@ class SignUp extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  controller: password,
+                  controller: _password,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Password',
@@ -101,7 +101,7 @@ class SignUp extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
-                  controller: comfirmPassword,
+                  controller: _comfirmPassword,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Confirm password',
@@ -140,19 +140,24 @@ class SignUp extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: GestureDetector(
               onTap: () async {
-                if (email.text.trim().isNotEmpty && password.text.isNotEmpty) {
-                  await Auth().signUp(
-                    email.text.trim(),
-                    password.text.trim(),
-                    comfirmPassword.text.trim(),
-                    context,
-                  );
+                if (_email.text.trim().isNotEmpty &&
+                    _password.text.isNotEmpty) {
+                  try {
+                    await Auth().signUp(
+                      _email.text.trim(),
+                      _password.text.trim(),
+                      _comfirmPassword.text.trim(),
+                      context,
+                    );
+                  } catch (e) {
+                    Fluttertoast.showToast(msg: e.toString());
+                  }
                 } else {
                   Fluttertoast.showToast(msg: "Fill the fields");
                 }
-                email.clear();
-                password.clear();
-                comfirmPassword.clear();
+                _email.clear();
+                _password.clear();
+                _comfirmPassword.clear();
               },
               child: Container(
                 // padding: EdgeInsets.symmetric(horizontal: 25),
